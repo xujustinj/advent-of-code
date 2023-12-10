@@ -1,9 +1,12 @@
-from typing import Union
+import re
+from typing import Optional, Sequence, Union
+
+import numpy as np
 
 from .iter import only
 
 
-def split_lines(lines: list[str]) -> tuple[Union[str, list[str]]]:
+def split_lines(lines: Sequence[str]) -> tuple[Union[str, list[str]]]:
     buckets: list[list[str]] = [[]]
     for line in lines:
         line = line.strip()
@@ -17,12 +20,37 @@ def split_lines(lines: list[str]) -> tuple[Union[str, list[str]]]:
         for bucket in buckets
     )
 
+def split(
+        line: str,
+        seps: Optional[Sequence[str]] = None,
+        maxsplit: int = 0,
+) -> list[str]:
+    if maxsplit < 0:
+        maxsplit = 0
+    pattern = (
+        r"\s|," if seps is None
+        else "|".join(re.escape(sep) for sep in seps)
+    )
+    return [
+        s.strip()
+        for s in re.split(pattern, line.strip(), maxsplit=maxsplit)
+        if len(s.strip()) > 0
+    ]
+
 def drop_prefix(line: str, delimiter: str = ":") -> str:
-    _, rest = line.split(delimiter, maxsplit=1)
-    return rest.strip()
+    _, rest = split(line, seps=[delimiter], maxsplit=1)
+    return rest
 
-def parse_words(line: str) -> list[int]:
-    return [s for s in line.strip().split() if len(s) > 0]
+def hierarchical_split(
+        line: str,
+        seps: Sequence[Sequence[str]],
+) -> list:
+    if len(seps) == 0:
+        return line.strip()
+    return [
+        hierarchical_split(line=s.strip(), seps=seps[1:])
+        for s in split(line, seps=[seps[0]])
+    ]
 
-def parse_ints(line: str) -> list[int]:
-    return [int(s) for s in parse_words(line)]
+def parse_ints(line: str, seps: Optional[Sequence[str]] = None) -> np.ndarray:
+    return np.array([int(s) for s in split(line, seps=seps)])

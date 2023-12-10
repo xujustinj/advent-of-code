@@ -48,22 +48,27 @@ class BaseSolution:
         with open(self.__input_cache_path, "w") as f:
             f.write(text)
 
-    def part_1_linewise(self, line: str) -> int:
+    def part_1_linewise(self, i: int, line: str) -> int:
         raise NotImplementedError(
             f"{self.__name} Part 1 has not been implemented yet."
         )
 
     def part_1(self, lines: list[str]) -> int:
-        return sum(self.part_1_linewise(line) for line in lines)
+        return sum(
+            self.part_1_linewise(i, line)
+            for i, line in enumerate(lines)
+        )
 
-    def part_2_linewise(self, line: str) -> int:
+    def part_2_linewise(self, i: int, line: str) -> int:
         raise NotImplementedError(
             f"{self.__name} Part 2 has not been implemented yet."
         )
 
     def part_2(self, lines: list[str]) -> int:
-        return sum(self.part_2_linewise(line) for line in lines)
-
+        return sum(
+            self.part_2_linewise(i, line)
+            for i, line in enumerate(lines)
+        )
     def __call__(self):
         self.__get_input()
 
@@ -114,7 +119,8 @@ class BaseSolution:
                     print(f" part {part}: {answer}  \u2705")
                 else:
                     print(f" part {part}: {answer}  \u274c {expect}")
-                pyperclip.copy(answer)
+                if copy:
+                    pyperclip.copy(answer)
 
             run_part(1)
             try:

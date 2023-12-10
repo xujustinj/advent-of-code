@@ -28,11 +28,11 @@ class Solution(BaseSolution):
     def __init__(self):
         super().__init__(year=2023, day=1)
 
-    def part_1_linewise(self, line: str) -> int:
+    def part_1_linewise(self, i: int, line: str) -> int:
         digits = [c for c in line if c.isnumeric()]
         return int(digits[0] + digits[-1])
 
-    def part_2_linewise(self, line: str) -> int:
+    def part_2_linewise(self, i: int, line: str) -> int:
         digits: list[str] = digit_re.findall(line)
         return 10 * parse(digits[0]) + parse(digits[-1])
 
