@@ -13,16 +13,10 @@ class Solution(BaseSolution):
     def __init__(self):
         super().__init__(year=2023, day=9)
 
-    def part_1(self, lines: list[str]) -> int:
-        return sum(
-            extrapolate(parse_ints(line))
-            for line in lines
-        )
+    def part_1_linewise(self, line: str) -> int:
+        return extrapolate(parse_ints(line))
 
-    def part_2(self, lines: list[str]) -> int:
-        return sum(
-            extrapolate(list(reversed(parse_ints(line))))
-            for line in lines
-        )
+    def part_2_linewise(self, line: str) -> int:
+        return extrapolate(list(reversed(parse_ints(line))))
 
 Solution()()

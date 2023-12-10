@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 import os
 import requests
 from typing import Literal, Optional
@@ -6,7 +5,7 @@ from typing import Literal, Optional
 import pyperclip
 
 
-class BaseSolution(ABC):
+class BaseSolution:
     __SESSION_PATH = "session"
     __INPUT_EXT = ".in.txt"
 
@@ -49,17 +48,21 @@ class BaseSolution(ABC):
         with open(self.__input_cache_path, "w") as f:
             f.write(text)
 
-    @abstractmethod
-    def part_1(self, lines: list[str]) -> int:
+    def part_1_linewise(self, line: str) -> int:
         raise NotImplementedError(
             f"{self.__name} Part 1 has not been implemented yet."
         )
 
-    @abstractmethod
-    def part_2(self, lines: list[str]) -> int:
+    def part_1(self, lines: list[str]) -> int:
+        return sum(self.part_1_linewise(line) for line in lines)
+
+    def part_2_linewise(self, line: str) -> int:
         raise NotImplementedError(
             f"{self.__name} Part 2 has not been implemented yet."
         )
+
+    def part_2(self, lines: list[str]) -> int:
+        return sum(self.part_2_linewise(line) for line in lines)
 
     def __call__(self):
         self.__get_input()

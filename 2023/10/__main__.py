@@ -1,7 +1,6 @@
-from collections import defaultdict
-import re
-
 from base import BaseSolution
+from util import *
+
 
 class Solution(BaseSolution):
     def __init__(self):
@@ -98,8 +97,7 @@ class Solution(BaseSolution):
                         lefts.add((ii,jj))
                         queue.append((ii,jj))
 
-        out = any((i == 0 or j == 0 or i == H-1 or j == W-1) for i,j in lefts)
-        if out:
+        if any((i == 0 or j == 0 or i == H-1 or j == W-1) for i,j in lefts):
             return H * W - len(loop) - len(lefts)
         else:
             return len(lefts)
