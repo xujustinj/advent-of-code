@@ -1,4 +1,5 @@
 from base import BaseSolution
+from util import *
 
 
 def extrapolate(values: list[int]) -> int:
@@ -14,13 +15,13 @@ class Solution(BaseSolution):
 
     def part_1(self, lines: list[str]) -> int:
         return sum(
-            extrapolate([int(s) for s in line.split()])
+            extrapolate(parse_ints(line))
             for line in lines
         )
 
     def part_2(self, lines: list[str]) -> int:
         return sum(
-            extrapolate(list(reversed([int(s) for s in line.split()])))
+            extrapolate(list(reversed(parse_ints(line))))
             for line in lines
         )
 
