@@ -1,4 +1,5 @@
-import re
+from base import BaseSolution
+from util import *
 
 digit_re = re.compile(r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))")
 
@@ -23,9 +24,16 @@ def parse(digit: str) -> int:
         return 9
     return int(digit)
 
-total: int = 0
-with open("2023/01/input.txt") as f:
-    for line in f.readlines():
+class Solution(BaseSolution):
+    def __init__(self):
+        super().__init__(year=2023, day=1)
+
+    def part_1_linewise(self, line: str) -> int:
+        digits = [c for c in line if c.isnumeric()]
+        return int(digits[0] + digits[-1])
+
+    def part_2_linewise(self, line: str) -> int:
         digits: list[str] = digit_re.findall(line)
-        total += 10 * parse(digits[0]) + parse(digits[-1])
-print(total)
+        return 10 * parse(digits[0]) + parse(digits[-1])
+
+Solution()()

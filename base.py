@@ -85,19 +85,29 @@ class BaseSolution:
                 in_lines = f.read().splitlines()
 
             output_path = os.path.join(self.__base_path, f"{name}.out.txt")
+            error_1: bool = False
+            error_2: bool = False
             expect_1: Optional[int] = None
             expect_2: Optional[int] = None
             if os.path.exists(output_path):
                 with open(output_path) as f:
                     out_lines = f.read().splitlines()
-                if out_lines[0] != "*":
+                if out_lines[0] == "-":
+                    error_1 = True
+                elif out_lines[0] != "*":
                     expect_1 = int(out_lines[0])
-                if out_lines[1] != "*":
+                if out_lines[1] == "-":
+                    error_2 = True
+                elif out_lines[1] != "*":
                     expect_2 = int(out_lines[1])
 
             def run_part(part: Literal[1,2]):
-                answer = (self.part_1 if part == 1 else self.part_2)(in_lines)
+                error = error_1 if part == 1 else error_2
+                if error:
+                    print(f" part {part}: ---")
+                    return
                 expect = expect_1 if part == 1 else expect_2
+                answer = (self.part_1 if part == 1 else self.part_2)(in_lines)
                 if expect is None:
                     print(f" part {part}: {answer}")
                 elif expect == answer:
