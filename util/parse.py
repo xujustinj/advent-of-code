@@ -10,14 +10,15 @@ def split_lines(lines: Sequence[str]) -> tuple[Union[str, list[str]]]:
     buckets: list[list[str]] = [[]]
     for line in lines:
         line = line.strip()
-        if len(line.strip()) == 0:
+        if len(line) == 0:
             buckets.append([])
         else:
             buckets[-1].append(line)
 
     return tuple(
-        only(bucket) if len(bucket) == 0 else bucket
+        only(bucket) if len(bucket) == 1 else bucket
         for bucket in buckets
+        if len(bucket) > 0
     )
 
 def split(
@@ -54,3 +55,7 @@ def hierarchical_split(
 
 def parse_ints(line: str, seps: Optional[Sequence[str]] = None) -> np.ndarray:
     return np.array([int(s) for s in split(line, seps=seps)])
+
+def parse_grid(lines: list[str]) -> tuple[np.ndarray, int, int]:
+    grid = np.array([list(line) for line in lines], dtype=np.character)
+    return (grid, *grid.shape)

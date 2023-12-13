@@ -53,10 +53,14 @@ class BaseSolution:
             f"{self.__name} Part 1 has not been implemented yet."
         )
 
+    def part_1_blockwise(self, i: int, block: list[str]) -> int:
+        raise NotImplementedError(
+            f"{self.__name} Part 1 has not been implemented yet."
+        )
+
     def part_1(self, lines: list[str]) -> int:
-        return sum(
-            self.part_1_linewise(i, line)
-            for i, line in enumerate(lines)
+        raise NotImplementedError(
+            f"{self.__name} Part 1 has not been implemented yet."
         )
 
     def part_2_linewise(self, i: int, line: str) -> int:
@@ -64,11 +68,16 @@ class BaseSolution:
             f"{self.__name} Part 2 has not been implemented yet."
         )
 
-    def part_2(self, lines: list[str]) -> int:
-        return sum(
-            self.part_2_linewise(i, line)
-            for i, line in enumerate(lines)
+    def part_2_blockwise(self, i: int, block: list[str]) -> int:
+        raise NotImplementedError(
+            f"{self.__name} Part 2 has not been implemented yet."
         )
+
+    def part_2(self, lines: list[str]) -> int:
+        raise NotImplementedError(
+            f"{self.__name} Part 2 has not been implemented yet."
+        )
+
     def __call__(self):
         self.__get_input()
 

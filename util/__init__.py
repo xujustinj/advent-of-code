@@ -18,4 +18,5 @@ from .parse import (
     drop_prefix,
     hierarchical_split,
     parse_ints,
+    parse_grid,
 )
