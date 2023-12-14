@@ -4,6 +4,7 @@ import re
 from typing import (
     Collection,
     Iterable,
+    Literal,
     Optional,
     Sequence,
     Union,
@@ -11,6 +12,7 @@ from typing import (
 
 import numpy as np
 
+from .debug import debug, debug_grid
 from .iter import same, only
 from .parse import (
     split_lines,
