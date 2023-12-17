@@ -16,7 +16,16 @@ class Solution(BaseSolution):
     def part_1_linewise(self, i: int, line: str) -> int:
         return extrapolate(parse_ints(line))
 
+    def part_1(self, lines: list[str]) -> int:
+        answer = sum(self.part_1_linewise(i, line) for i, line in enumerate(lines))
+        return answer
+
     def part_2_linewise(self, i: int, line: str) -> int:
         return extrapolate(parse_ints(line)[::-1])
+
+    def part_2(self, lines: list[str]) -> int:
+        answer = sum(self.part_2_linewise(i, line) for i, line in enumerate(lines))
+        return answer
+
 
 Solution()()

@@ -1,6 +1,5 @@
 from base import BaseSolution
 from util import *
-import heapq
 
 
 DIRECTIONS = ((-1,0), (0,1), (1,0), (0,-1))
@@ -10,7 +9,7 @@ class Solution(BaseSolution):
         super().__init__(year=2023, day=17)
 
     def part_1(self, lines: list[str]) -> int:
-        grid, H, W = parse_digit_grid(lines)
+        grid, H, W = parse_grid(lines)
         distance: dict[tuple[int,int], int] = dict()
         paths: set[tuple[int,int,int,Optional[int],int]] = set()
         queue: list[tuple[int,int,int,Optional[int],int]] = [(0,0,0,None,0)]
@@ -51,7 +50,7 @@ class Solution(BaseSolution):
         return distance[(H-1, W-1)]
 
     def part_2(self, lines: list[str]) -> int:
-        grid, H, W = parse_digit_grid(lines)
+        grid, H, W = parse_grid(lines)
         distance: dict[tuple[int,int], int] = dict()
         paths: set[tuple[int,int,int,Optional[int],int]] = set()
         queue: list[tuple[int,int,int,Optional[int],int]] = [(0,0,0,None,0)]

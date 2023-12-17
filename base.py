@@ -74,6 +74,11 @@ class BaseSolution:
             f"{self.__name} Part 2 has not been implemented yet."
         )
 
+    def part_2_gridwise(self, i: int, block: list[str]) -> int:
+        raise NotImplementedError(
+            f"{self.__name} Part 2 has not been implemented yet."
+        )
+
     def part_2(self, lines: list[str]) -> int:
         raise NotImplementedError(
             f"{self.__name} Part 2 has not been implemented yet."
@@ -123,14 +128,21 @@ class BaseSolution:
                     return
                 expect = expect_1 if part == 1 else expect_2
                 answer = int((self.part_1 if part == 1 else self.part_2)(in_lines))
-                if expect is None:
-                    print(f" part {part}: {answer}")
+                if answer < 0:
+                    out = f" part {part}: ---"
+                elif expect is None:
+                    out = f" part {part}: {answer}"
                 elif expect == answer:
-                    print(f" part {part}: {answer}  \u2705")
+                    out = f" part {part}: {answer}  \u2705"
                 else:
-                    print(f" part {part}: {answer}  \u274c {expect}")
-                if copy:
-                    pyperclip.copy(answer)
+                    out = f" part {part}: {answer}  \u274c {expect}"
+                if copy and answer >= 0:
+                    try:
+                        pyperclip.copy(answer)
+                        out += "  \U0001f4cb"
+                    except:
+                        pass
+                print(out)
 
             run_part(1)
             try:

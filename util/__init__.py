@@ -1,4 +1,5 @@
 from collections import defaultdict
+import heapq
 import math
 import re
 from typing import (
@@ -21,5 +22,4 @@ from .parse import (
     hierarchical_split,
     parse_ints,
     parse_grid,
-    parse_digit_grid,
 )

@@ -19,6 +19,10 @@ class Solution(BaseSolution):
                     return 0
         return id
 
+    def part_1(self, lines: list[str]) -> int:
+        answer = sum(self.part_1_linewise(i, line) for i, line in enumerate(lines))
+        return answer
+
     def part_2_linewise(self, i: int, line: str) -> int:
         r: int = 0
         g: int = 0
@@ -34,5 +38,9 @@ class Solution(BaseSolution):
                 elif color == "blue":
                     b = max(b, n)
         return r * g * b
+
+    def part_2(self, lines: list[str]) -> int:
+        answer = sum(self.part_2_linewise(i, line) for i, line in enumerate(lines))
+        return answer
 
 Solution()()

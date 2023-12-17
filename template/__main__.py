@@ -12,7 +12,7 @@ class Solution(BaseSolution):
         return super().part_1_blockwise(i, block)
 
     def part_1(self, lines: list[str]) -> int:
-        answer = 0
+        answer = -1
         # answer = sum(self.part_1_linewise(i, line) for i, line in enumerate(lines))
         # answer = sum(self.part_1_blockwise(i, block) for i, block in enumerate(split_lines(lines)))
         return answer
@@ -24,7 +24,7 @@ class Solution(BaseSolution):
         return super().part_2_blockwise(i, block)
 
     def part_2(self, lines: list[str]) -> int:
-        answer = 0
+        answer = -1
         # answer = sum(self.part_2_linewise(i, line) for i, line in enumerate(lines))
         # answer = sum(self.part_2_blockwise(i, block) for i, block in enumerate(split_lines(lines)))
         return answer

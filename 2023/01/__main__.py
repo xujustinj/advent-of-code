@@ -32,8 +32,16 @@ class Solution(BaseSolution):
         digits = [c for c in line if c.isnumeric()]
         return int(digits[0] + digits[-1])
 
+    def part_1(self, lines: list[str]) -> int:
+        answer = sum(self.part_1_linewise(i, line) for i, line in enumerate(lines))
+        return answer
+
     def part_2_linewise(self, i: int, line: str) -> int:
         digits: list[str] = digit_re.findall(line)
         return 10 * parse(digits[0]) + parse(digits[-1])
+
+    def part_2(self, lines: list[str]) -> int:
+        answer = sum(self.part_2_linewise(i, line) for i, line in enumerate(lines))
+        return answer
 
 Solution()()

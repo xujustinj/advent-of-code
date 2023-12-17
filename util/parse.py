@@ -57,9 +57,8 @@ def parse_ints(line: str, seps: Optional[Sequence[str]] = None) -> np.ndarray:
     return np.array([int(s) for s in split(line, seps=seps)])
 
 def parse_grid(lines: list[str]) -> tuple[np.ndarray, int, int]:
-    grid = np.array([list(line) for line in lines])
-    return (grid, *grid.shape)
-
-def parse_digit_grid(lines: list[str]) -> tuple[np.ndarray, int, int]:
-    grid = np.array([[int(c) for c in line] for line in lines], dtype=np.int8)
+    try:
+        grid = np.array([[int(c) for c in line] for line in lines], dtype=np.int8)
+    except:
+        grid = np.array([list(line) for line in lines])
     return (grid, *grid.shape)
