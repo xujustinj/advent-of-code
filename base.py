@@ -41,7 +41,8 @@ class BaseSolution:
 
         cookies = dict(session=self.__session_cookie)
         res = requests.get(self.__input_url, cookies=cookies)
-        assert res.ok
+        assert res.ok, \
+            f"Failed to fetch input for {self.__name}. This is expected if the problem has not been released yet."
         text = res.text
 
         os.makedirs(os.path.dirname(self.__input_cache_path), exist_ok=True)
@@ -121,7 +122,7 @@ class BaseSolution:
                     print(f" part {part}: ---")
                     return
                 expect = expect_1 if part == 1 else expect_2
-                answer = (self.part_1 if part == 1 else self.part_2)(in_lines)
+                answer = int((self.part_1 if part == 1 else self.part_2)(in_lines))
                 if expect is None:
                     print(f" part {part}: {answer}")
                 elif expect == answer:

@@ -21,4 +21,5 @@ from .parse import (
     hierarchical_split,
     parse_ints,
     parse_grid,
+    parse_digit_grid,
 )
