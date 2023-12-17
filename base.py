@@ -1,8 +1,14 @@
 import os
 import requests
 from typing import Literal, Optional
+import time
 
+from termcolor import colored
 import pyperclip
+
+
+def bold(s: str) -> str:
+    return colored(s, attrs=("bold",))
 
 
 class BaseSolution:
@@ -124,25 +130,41 @@ class BaseSolution:
             def run_part(part: Literal[1,2]):
                 error = error_1 if part == 1 else error_2
                 if error:
-                    print(f" part {part}: ---")
                     return
+
+                print(bold("\u2500" * 80))
+                print(f"    {bold('PART')} \u2502 {part}")
+
                 expect = expect_1 if part == 1 else expect_2
+
+                start_time_s = time.time()
                 answer = int((self.part_1 if part == 1 else self.part_2)(in_lines))
+                end_time_s = time.time()
+                elapsed_ms = (end_time_s - start_time_s) * 1e3
+
                 if answer < 0:
-                    out = f" part {part}: ---"
-                elif expect is None:
-                    out = f" part {part}: {answer}"
-                elif expect == answer:
-                    out = f" part {part}: {answer}  \u2705"
-                else:
-                    out = f" part {part}: {answer}  \u274c {expect}"
-                if copy and answer >= 0:
+                    print("NOT IMPLEMENTED YET")
+                    return
+
+                color: Optional[str] = (
+                    None if expect is None else
+                    "green" if expect == answer else
+                    "red"
+                )
+                if expect is not None:
+                    print(f"{bold('EXPECTED')} \u2502 {expect}")
+                out = f"  {bold('ANSWER')} \u2502 {colored(str(answer), color=color)}"
+
+                if copy:
                     try:
                         pyperclip.copy(answer)
                         out += "  \U0001f4cb"
                     except:
                         pass
+
                 print(out)
+                print(f"    {bold('TIME')} \u2502 {elapsed_ms:.3f} ms")
+
 
             run_part(1)
             try:
@@ -150,8 +172,8 @@ class BaseSolution:
             except NotImplementedError:
                 pass
 
-        print(self.__name)
+        print(bold(self.__name))
         for name in input_names:
-            print("-" * 80)
-            print(f"INPUT: {name}")
+            print(bold("\u2501" * 80))
+            print(f"   {bold('INPUT')} \u2502 {name}")
             run_on_input(name, copy=(name == "input"))
