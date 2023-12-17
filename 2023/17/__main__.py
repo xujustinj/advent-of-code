@@ -63,7 +63,7 @@ class Solution(BaseSolution):
 
             if (i,j) in distance:
                 assert distance[(i,j)] <= w
-            else:
+            elif m >= 4:
                 distance[(i,j)] = w
 
             for dd, (di, dj) in enumerate(DIRECTIONS):
