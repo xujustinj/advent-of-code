@@ -23,8 +23,8 @@ class Solution(BaseSolution):
                 label = step[:-1]
                 boxes[hash(label)].pop(label, None)
             else:
-                label, focal_length = split(step, "=")
-                boxes[hash(label)][label] = int(focal_length)
+                label, focal_length = split(step, "=", parse_int=True)
+                boxes[hash(label)][label] = focal_length
 
         acc: int = 0
         for b, box in enumerate(boxes):

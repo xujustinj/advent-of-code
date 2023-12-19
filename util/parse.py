@@ -25,7 +25,22 @@ def split(
         line: str,
         seps: Optional[Sequence[str]] = None,
         maxsplit: int = 0,
-) -> list[str]:
+        parse_int: bool = False,
+        parse_float: bool = False,
+) -> list[Union[str, int, float]]:
+    def parse(token: str) -> Union[str, int, float]:
+        if parse_int:
+            try:
+                return int(token)
+            except:
+                pass
+        if parse_float:
+            try:
+                return float(token)
+            except:
+                pass
+        return token
+
     if maxsplit < 0:
         maxsplit = 0
     pattern = (
@@ -33,10 +48,11 @@ def split(
         else "|".join(re.escape(sep) for sep in seps)
     )
     return [
-        s.strip()
+        parse(s.strip())
         for s in re.split(pattern, line.strip(), maxsplit=maxsplit)
         if len(s.strip()) > 0
     ]
+
 
 def drop_prefix(line: str, delimiter: str = ":") -> str:
     _, rest = split(line, seps=[delimiter], maxsplit=1)
@@ -54,7 +70,7 @@ def hierarchical_split(
     ]
 
 def parse_ints(line: str, seps: Optional[Sequence[str]] = None) -> np.ndarray:
-    return np.array([int(s) for s in split(line, seps=seps)])
+    return np.array([int(s) for s in split(line, seps=seps, parse_int=True)])
 
 def parse_grid(lines: list[str]) -> tuple[np.ndarray, int, int]:
     try:

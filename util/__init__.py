@@ -23,3 +23,4 @@ from .parse import (
     parse_ints,
     parse_grid,
 )
+from .int_range import Range
